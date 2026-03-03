@@ -2,14 +2,13 @@
 
 Hands-on training material for learning Python + API fundamentals with a storyline.
 
-## What is in this repo
+## What's in this repo
 
 - 7 learner notebooks in `notebooks/` (0 to 6)
 - 6 completed solution notebooks in `solutions/` (1 to 6)
 - 1 quick reference in `cheatsheet/api_data_skills_cheatsheet.md`
 - First-run guide in `docs/FIRST_TIME_SETUP.md`
-- Optional helper scripts in `scripts/bootstrap.sh` and `scripts/bootstrap.ps1`
-- Planning docs in `api-skills-plan.md` and `implementation-plan.md`
+- Optional helper scripts in `scripts/bootstrap.sh` (macOS/Linux) and `scripts/bootstrap.ps1` (Windows)
 
 ## Learning path
 
@@ -25,7 +24,7 @@ Start with notebook 0, then continue in order:
 
 ---
 
-## Clone this repo
+## Get the files (one-time)
 
 If you do not have the files locally yet:
 
@@ -39,39 +38,38 @@ See: [Install Git](https://git-scm.com/install/)
 
 ---
 
-## First-time setup (recommended)
+## Quick start (recommended)
 
-If you prefer a dedicated setup document (outside notebooks), use:
+Use one command, then open notebook 0.
 
-- `docs/FIRST_TIME_SETUP.md` (manual steps + troubleshooting)
-- `scripts/bootstrap.sh` (optional macOS/Linux helper, auto-opens Jupyter)
-- `scripts/bootstrap.ps1` (optional Windows PowerShell helper, auto-opens Jupyter)
-
-Quick run for the helper:
+### macOS/Linux
 
 ```bash
 bash scripts/bootstrap.sh
 ```
 
-On Windows PowerShell:
+### Windows PowerShell
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\bootstrap.ps1
 ```
 
-If you want setup only (no auto-launch):
+The helper script will:
+- create `.venv` if needed
+- install required packages
+- launch Jupyter Notebook
 
-```bash
-bash scripts/bootstrap.sh --setup-only
-```
+Then open:
+- `notebooks/0_setup_and_sneak_peek.ipynb`
 
-Windows PowerShell setup-only:
+---
 
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\bootstrap.ps1 -SetupOnly
-```
+## Full manual setup (step-by-step)
 
-Then continue with the manual steps below (activate env + launch Jupyter), or directly open notebook 0.
+If you prefer to run each step yourself, follow this section.
+
+For an expanded version with troubleshooting, also see:
+- `docs/FIRST_TIME_SETUP.md`
 
 ### 1) Install Python
 
@@ -107,6 +105,7 @@ On Windows (PowerShell), activation is:
 ### 3) Install dependencies
 
 ```bash
+pip install --upgrade pip
 pip install jupyter pandas requests openpyxl
 ```
 
@@ -122,43 +121,40 @@ Open `notebooks/0_setup_and_sneak_peek.ipynb` first.
 
 ---
 
+## Optional setup-only mode (no auto-launch)
+
+Use this if you want the script to install only and not start Jupyter.
+
+### macOS/Linux
+
+```bash
+bash scripts/bootstrap.sh --setup-only
+```
+
+### Windows PowerShell
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\bootstrap.ps1 -SetupOnly
+```
+
+Then start manually:
+
+```bash
+source .venv/bin/activate
+jupyter notebook
+```
+
+---
+
 ## Daily workflow (after first setup)
 
-Every time you come back:
+Each time you return:
 
 1. Open terminal
 2. `cd` to this repo
 3. Activate env (`source .venv/bin/activate` on macOS/Linux)
 4. Run `jupyter notebook`
 5. Continue with the next notebook
-
----
-
-## Tips for running this smoothly the first time
-
-### Browser/Jupyter tips
-
-- Chrome works well for notebook rendering and widget behavior.
-- Use **Shift+Enter** to run the active cell.
-- Run cells top-to-bottom; many examples depend on earlier variables.
-- If outputs look stale, use **Kernel → Restart & Run All**.
-
-### API/network tips
-
-- First API calls may fail on corporate networks (VPN/proxy/certificates).
-- If you see SSL/proxy/timeouts, retry once, then check VPN/proxy settings.
-- Keep the exercises moving: if an API is temporarily down, continue with explanation cells and return later.
-
-### Environment tips
-
-- If `jupyter` is "not found", your env is likely not activated.
-- If package install fails, upgrade pip first:
-
-```bash
-python -m pip install --upgrade pip
-```
-
-- Then reinstall required packages.
 
 ---
 
@@ -182,13 +178,28 @@ python -m pip install --upgrade pip
 
 ---
 
-## Suggested facilitator smoke test
+## Tips for a smooth first run
 
-Before a training session, quickly run:
+### Browser/Jupyter tips
 
-1. Notebook 0 demo cell (API + table + file save)
-2. One API cell in notebook 3
-3. One Open-Meteo cell in notebook 4
-4. Finale cell in notebook 6
+- Chrome works well for notebook rendering and widget behavior.
+- Use **Shift+Enter** to run the active cell.
+- Run cells top-to-bottom; many examples depend on earlier variables.
+- If outputs look stale, use **Kernel → Restart & Run All**.
 
-This verifies package setup, live API access, and end-to-end flow.
+### API/network tips
+
+- First API calls may fail on corporate networks (VPN/proxy/certificates).
+- If you see SSL/proxy/timeouts, retry once, then check VPN/proxy settings.
+- If an API is temporarily down, continue with explanation cells and return later.
+
+### Environment tips
+
+- If `jupyter` is "not found", your env is likely not activated.
+- If package install fails, upgrade pip first:
+
+```bash
+python -m pip install --upgrade pip
+```
+
+- Then reinstall required packages.
