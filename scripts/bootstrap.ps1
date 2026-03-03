@@ -32,19 +32,18 @@ if (-not (Test-Path ".venv")) {
 }
 
 $VenvPython = Join-Path $RootDir ".venv\Scripts\python.exe"
-$VenvJupyter = Join-Path $RootDir ".venv\Scripts\jupyter.exe"
 
 Write-Host "==> Installing dependencies into .venv"
 & $VenvPython -m pip install --upgrade pip
-& $VenvPython -m pip install jupyter pandas requests openpyxl
+& $VenvPython -m pip install notebook pandas requests openpyxl
 
 if (-not $SetupOnly) {
     Write-Host "==> Launching Jupyter Notebook..."
     Write-Host "(Close this terminal or press Ctrl+C to stop Jupyter later.)"
-    & $VenvJupyter notebook
+    & $VenvPython -m notebook
 } else {
     Write-Host ""
     Write-Host "Setup complete. Next steps:"
     Write-Host "  .\.venv\Scripts\Activate.ps1"
-    Write-Host "  jupyter notebook"
+    Write-Host "  python -m notebook"
 }

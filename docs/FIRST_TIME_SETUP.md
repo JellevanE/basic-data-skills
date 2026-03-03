@@ -56,13 +56,13 @@ Windows CMD:
 
 ```bash
 pip install --upgrade pip
-pip install jupyter pandas requests openpyxl
+pip install notebook pandas requests openpyxl
 ```
 
 ### 5) Launch Jupyter
 
 ```bash
-jupyter notebook
+python -m notebook
 ```
 
 Then open [notebooks/0_setup_and_sneak_peek.ipynb](../notebooks/0_setup_and_sneak_peek.ipynb).
@@ -94,7 +94,7 @@ Then run:
 
 ```bash
 source .venv/bin/activate
-jupyter notebook
+python -m notebook
 ```
 
 ---
@@ -124,7 +124,7 @@ Then run:
 
 ```powershell
 .\.venv\Scripts\Activate.ps1
-jupyter notebook
+python -m notebook
 ```
 
 ---
@@ -135,7 +135,7 @@ Inside activated environment:
 
 ```bash
 python -c "import requests, pandas, openpyxl; print('ok')"
-jupyter --version
+python -m notebook --version
 ```
 
 ---
@@ -145,4 +145,4 @@ jupyter --version
 - `python3: command not found` -> try `python`; if missing, install Python 3.11+
 - `pip` not found -> run `python -m pip --version`
 - SSL/proxy timeout on install -> connect VPN and retry, or ask IT for proxy config
-- `jupyter: command not found` -> ensure environment is activated and reinstall jupyter
+- `python -m notebook` fails -> ensure environment is activated and reinstall `notebook`

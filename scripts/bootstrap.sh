@@ -34,15 +34,15 @@ fi
 
 echo "==> Installing dependencies into .venv"
 "$ROOT_DIR/.venv/bin/python" -m pip install --upgrade pip
-"$ROOT_DIR/.venv/bin/python" -m pip install jupyter pandas requests openpyxl
+"$ROOT_DIR/.venv/bin/python" -m pip install notebook pandas requests openpyxl
 
 echo
 if [[ "$LAUNCH_JUPYTER" == true ]]; then
   echo "==> Launching Jupyter Notebook..."
   echo "(Use Ctrl+C in this terminal to stop Jupyter later.)"
-  exec "$ROOT_DIR/.venv/bin/jupyter" notebook
+  exec "$ROOT_DIR/.venv/bin/python" -m notebook
 else
   echo "Setup complete. Next steps:"
   echo "  source .venv/bin/activate"
-  echo "  jupyter notebook"
+  echo "  python -m notebook"
 fi

@@ -106,7 +106,7 @@ On Windows (PowerShell), activation is:
 
 ```bash
 pip install --upgrade pip
-pip install jupyter pandas requests openpyxl
+pip install notebook pandas requests openpyxl
 ```
 
 ### 4) Launch Jupyter
@@ -114,7 +114,7 @@ pip install jupyter pandas requests openpyxl
 From the repo root:
 
 ```bash
-jupyter notebook
+python -m notebook
 ```
 
 Open `notebooks/0_setup_and_sneak_peek.ipynb` first.
@@ -141,7 +141,7 @@ Then start manually:
 
 ```bash
 source .venv/bin/activate
-jupyter notebook
+python -m notebook
 ```
 
 ---
@@ -153,16 +153,8 @@ Each time you return:
 1. Open terminal
 2. `cd` to this repo
 3. Activate env (`source .venv/bin/activate` on macOS/Linux)
-4. Run `jupyter notebook`
+4. Run `python -m notebook`
 5. Continue with the next notebook
-
----
-
-## Working with solutions
-
-- Learners use notebooks in `notebooks/`
-- Facilitators can validate answers with files in `solutions/`
-- Notebook 0 intentionally has no separate solutions file
 
 ---
 
@@ -195,7 +187,7 @@ Each time you return:
 
 ### Environment tips
 
-- If `jupyter` is "not found", your env is likely not activated.
+- If `python -m notebook` fails, your env is likely not activated.
 - If package install fails, upgrade pip first:
 
 ```bash
