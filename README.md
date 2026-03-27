@@ -4,8 +4,8 @@ Hands-on training material for learning Python + API fundamentals with a storyli
 
 ## What's in this repo
 
-- 7 learner notebooks in `notebooks/` (0 to 6)
-- 6 completed solution notebooks in `solutions/` (1 to 6)
+- 7 learner notebooks in `notebooks/` (2 of 7 available, WIP)
+- 6 completed solution notebooks in `solutions/` (1 of 6 available, WIP)
 - 1 quick reference in `cheatsheet/api_data_skills_cheatsheet.md`
 - First-run guide in `docs/FIRST_TIME_SETUP.md`
 - Optional helper scripts in `scripts/bootstrap.sh` (macOS/Linux) and `scripts/bootstrap.ps1` (Windows)
