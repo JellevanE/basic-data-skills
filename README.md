@@ -106,7 +106,7 @@ On Windows (PowerShell), activation is:
 
 ```bash
 pip install --upgrade pip
-pip install notebook pandas requests openpyxl
+pip install notebook pandas requests openpyxl nbstripout
 ```
 
 ### 4) Launch Jupyter

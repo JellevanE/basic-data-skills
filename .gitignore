@@ -205,3 +205,8 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Agents
+CLAUDE.md
+AGENTS.md
+docs/NOTEBOOK_AUTHORING_RULES.md
