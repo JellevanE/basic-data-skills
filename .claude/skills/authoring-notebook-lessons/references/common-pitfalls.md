@@ -24,6 +24,38 @@ Use this as a checklist when auditing an existing notebook, or to sanity-check a
 
 **Fix.** Find a runnable example. If the section is genuinely informational (showing patterns the learner won't encounter until later), reframe as a small "preview/reference" callout and skip the section number, OR find a way to make even a minimal version of the idea runnable.
 
+### Long demo-only run before the first exercise
+
+**Symptom.** The learner reads (and runs) several sections before the first `# YOUR CODE HERE`. The first hands-on task lands in section 4.
+
+**Why it's wrong.** Beginners learn by doing. A lecture-length preamble means the concepts from the earlier sections were never practiced, so by the time they write code they're juggling three unrehearsed ideas at once.
+
+**Fix.** Put a small exercise in the first section or two — even a trivial one (build a 3-row DataFrame from a list of dicts and print it) that lets them feel the new object. Then escalate. Also confirm the notebook ends with a synthesis exercise that recombines its skills, not just per-section drills.
+
+### A later cell hands back a prior exercise's answer
+
+**Symptom.** §5.5's setup cell re-fetches the data and rebuilds the exact DataFrame §5.4 asked the learner to create.
+
+**Why it's wrong.** The learner can scroll to the next section and read the solution to the exercise they just struggled with — or skip attempting it entirely.
+
+**Fix.** Reuse the learner's own variable downstream. If you must rebuild, do it in a visibly condensed form that doesn't echo the exercise's steps. Never paste the solution into a later cell.
+
+### New syntax used without a first-time explanation
+
+**Symptom.** A demo uses `c.get("area", 0)` or `df[df["x"] > n]` with no note on what it does, and the learner hasn't met `.get()` or boolean indexing in any earlier notebook.
+
+**Why it's wrong.** Unexplained syntax reads as magic. The learner can copy it but can't transfer it.
+
+**Fix.** One-line explanation at first appearance: what it does + why it's used here (`.get(key, default)` avoids a crash when the key is missing, so it's safer than `dict[key]`). Check prior notebooks to confirm whether it's genuinely new before explaining or assuming.
+
+### Output operation taught without the round-trip
+
+**Symptom.** A section saves a CSV and stops. The learner never sees the file confirmed, located, or read back.
+
+**Why it's wrong.** A file they can't find or reload feels abstract; saving and loading are two halves of one skill.
+
+**Fix.** Tell them where the file lands and how to find it (the IDE file tree or the Jupyter file browser), then add a short cell that loads it back and shows `.head()`.
+
 ### Exercise prompt spoon-feeds the answer
 
 **Symptom.** Section teaches "read the docs to find the right endpoint." Exercise prompt then says `Endpoint: https://api.example.com/v1/things/{thing}`.
@@ -140,11 +172,12 @@ Two markers, both for the same exercise.
 Given an existing notebook, walk this list in order:
 
 1. **Run it from a fresh kernel.** Either `Kernel → Restart & Run All` in Jupyter, or `jupyter nbconvert --to notebook --execute solutions/foo.ipynb`. Note any cell that fails.
-2. **Read the markdown cells in order.** For each section: theory → demo → exercise present? In order? Demo runnable, demo demonstrates its claim?
-3. **Read the starter cells.** Could the learner solve them just from the comments? (If yes, soften the comments.)
-4. **Diff against the previous notebook in the series.** Tone consistent? Vocabulary consistent? New colloquialisms introduced?
-5. **Read the checkpoint.** Does every required variable have type AND content checks? Are assertions tight (`==`, not `>=`)? Do error messages tell the learner what went wrong?
-6. **Read the "What you'll learn" list.** Is every promise exercised by the checkpoint?
-7. **Diff learner ↔ solutions structurally.** Cell counts match? Markdown cells identical? Exercise variable names match?
+2. **Read the markdown cells in order.** For each section: theory → demo → exercise present? In order? Demo runnable, demo demonstrates its claim? Is any new syntax explained on first use? Is each demo one idea per cell, not three?
+3. **Trace the pacing.** Where does the learner first touch the keyboard — is the first exercise in the first section or two? Does any section lack an exercise? Is there a synthesis exercise at the end? Does any later setup cell rebuild a prior exercise's answer?
+4. **Read the starter cells.** Could the learner solve them just from the comments? (If yes, soften the comments.) Does the exercise demand a step beyond replaying the demo?
+5. **Diff against the previous notebook in the series.** Tone consistent? Vocabulary consistent? New colloquialisms introduced?
+6. **Read the checkpoint.** Does every required variable have type AND content checks? Are assertions tight (`==`, not `>=`)? Do error messages tell the learner what went wrong?
+7. **Read the "What you'll learn" list.** Is every promise exercised by the checkpoint?
+8. **Diff learner ↔ solutions structurally.** Cell counts match? Markdown cells identical? Exercise variable names match?
 
 Take findings to the user before editing. Don't bundle a tone-polish pass with a structural fix — they may want different scope on each.

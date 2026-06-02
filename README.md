@@ -4,8 +4,8 @@ Hands-on training material for learning Python + API fundamentals with a storyli
 
 ## What's in this repo
 
-- 7 learner notebooks in `notebooks/` (2 of 7 available, WIP)
-- 6 completed solution notebooks in `solutions/` (1 of 6 available, WIP)
+- 7 learner notebooks in `notebooks/` (0–6, all available)
+- 6 completed solution notebooks in `solutions/` (notebooks 1–6; notebook 0 is setup-only)
 - 1 quick reference in `cheatsheet/api_data_skills_cheatsheet.md`
 - First-run guide in `docs/FIRST_TIME_SETUP.md`
 - Optional helper scripts in `scripts/bootstrap.sh` (macOS/Linux) and `scripts/bootstrap.ps1` (Windows)
@@ -19,7 +19,7 @@ Start with notebook 0, then continue in order:
 3. `2_python_collections_and_loops.ipynb` — lists, dicts, `.get()`, nesting, loops
 4. `3_your_first_api_calls.ipynb` — first `requests.get()`, status codes
 5. `4_working_with_api_data.ipynb` — query params, Open-Meteo, auth concepts, pagination
-6. `5_transforming_and_saving_data.ipynb` — loops → pandas, filter/sort, CSV/Excel export
+6. `5_transforming_and_saving_data.ipynb` — loops → pandas DataFrames, select/filter/sort, derived columns, CSV/Excel/JSON export
 7. `6_errors_troubleshooting_and_finale.ipynb` — error handling, debugging, finale certificate
 
 ---
@@ -195,3 +195,29 @@ python -m pip install --upgrade pip
 ```
 
 - Then reinstall required packages.
+
+---
+
+## Keeping notebooks clean (nbstripout)
+
+Jupyter saves cell outputs (printed text, tables, images) inside the `.ipynb` JSON. Once a notebook has been executed, the file carries all of that output — which makes git diffs noisy and inflates file size. [`nbstripout`](https://github.com/kynan/nbstripout) removes outputs in place, leaving just the source cells. It's already listed in the dependency install above.
+
+### Strip outputs from every notebook in the repo
+
+From the repo root:
+
+```bash
+nbstripout notebooks/*.ipynb solutions/*.ipynb
+```
+
+Safe to run repeatedly — only files that actually contain outputs get rewritten. Useful right before staging notebook changes, or after running a notebook end-to-end to validate it.
+
+### Make it automatic (recommended)
+
+Install `nbstripout` once as a git filter so outputs are stripped on every commit, with no manual step:
+
+```bash
+nbstripout --install
+```
+
+This adds a clean filter to your `.git/config` and a `.gitattributes` entry. After that, committed `.ipynb` files will never carry outputs — your working copy stays as you ran it, but the version git sees is always stripped.

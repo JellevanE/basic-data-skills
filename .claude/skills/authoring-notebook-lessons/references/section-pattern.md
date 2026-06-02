@@ -139,6 +139,8 @@ Demo cell that prints nothing or prints only `Status: 200`: no visible artifact 
 
 Exercise that just asks for a `print()`: not checkable. Always produce a named variable.
 
+Exercise that only replays the demo with different arguments: the learner copies the demo cell and swaps a number — no thinking required. Build in one step *beyond* the demo that they can reach by logic from what they've seen: derive a new column (population ÷ area = density), combine two operations (filter *then* sort), or ask for an inverse pair (the 5 highest *and* the 5 lowest). The stretch should be reasoned out, not require a brand-new concept.
+
 Exercise prompt that gives the full endpoint URL: defeats any "read the docs" lesson above. State the *task*; let the learner find the path.
 
 Starter cell with the answer in comments: read your starter as the learner. If you can solve the exercise just by typing what the comments say, the comments are too revealing.
