@@ -87,6 +87,10 @@ with open("data.json") as f:
 # Write
 with open("data.json", "w") as f:
     json.dump(data, f, indent=2)
+
+# Create an output folder first (no error if it exists)
+import os
+os.makedirs("output", exist_ok=True)
 ```
 
 ## Pandas
@@ -94,9 +98,12 @@ with open("data.json", "w") as f:
 import pandas as pd
 
 df = pd.DataFrame(list_of_dicts)       # Create table
+df.head(10)                            # First 10 rows
+list(df.columns)                       # Column names
 df[["col1", "col2"]]                   # Select columns
 df[df["col"] > 100]                    # Filter rows
 df.sort_values("col", ascending=False) # Sort
+df.iloc[4]                             # Row by position (the 5th row)
 df.to_csv("file.csv", index=False)     # Save CSV
 df.to_excel("file.xlsx", index=False)  # Save Excel
 ```
@@ -130,6 +137,20 @@ else:
     print(response.text)
 ```
 
+## Robust requests
+```python
+import time
+
+try:
+    response = requests.get(url, timeout=10)  # Give up after 10s
+    response.raise_for_status()               # Raise on 4xx/5xx
+    data = response.json()
+except requests.exceptions.RequestException as e:
+    print(f"Request failed: {e}")
+
+time.sleep(0.5)   # Pause between calls in a loop (avoid 429s)
+```
+
 ## Virtual environment
 ```bash
 python3 -m venv venv              # Create
@@ -147,3 +168,4 @@ pip install package_name          # Install package
 | JSONPlaceholder  | jsonplaceholder.typicode.com | None   |
 | PokeAPI          | pokeapi.co                   | None   |
 | GitHub           | api.github.com               | Optional |
+| NASA             | api.nasa.gov                 | API key (`?api_key=`; `DEMO_KEY` works for testing) |
