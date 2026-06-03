@@ -8,6 +8,38 @@ Use this as a checklist when auditing an existing notebook, or to sanity-check a
 
 ## Content pitfalls
 
+### Notebook dives into §N.1 with no motivation
+
+**Symptom.** Title, time estimate, "What you'll learn" bullets — then straight into the first section's code. No paragraph connecting this notebook to the previous one or to the learner's real work.
+
+**Why it's wrong.** The bullets are a syllabus, not motivation. Without the "why should I care" bridge, the notebook opens like a lecture and the learner has no frame to hang the sections on.
+
+**Fix.** Follow the notebook opening pattern (SKILL.md): 2–4 sentences after the time estimate — what they can already do, what this notebook adds, why it matters at work. NB4's bridge paragraph and NB5's "Why transform?" section are the approved register.
+
+### Failure mode described but never triggered (or remedy demoed without its failure)
+
+**Symptom.** A section teaching errors shows one live 404, then a prose table for 401/403/429/500. Or worse: a demo shows the *remedy* working — `time.sleep(0.5)` in a three-call loop — against an API that would never have rate-limited at that volume.
+
+**Why it's wrong.** Learners learn failure modes by seeing them. A described-but-never-seen error stays abstract; a remedy-only demo is cargo-cult code that implies a failure nobody witnessed.
+
+**Fix.** Trigger each error live where feasible — reuse earlier notebooks' setups (an auth-protected API from a previous notebook, called without its key, is a real 401). For failures you can't reproduce honestly (429, 500), keep the description but say so in the notebook text ("we can't safely trigger this one here"), and don't stage a fix for it.
+
+### New language construct introduced in one dense cell
+
+**Symptom.** The learner's first-ever `try`/`except` arrives in a single cell that also introduces `timeout=`, `raise_for_status()`, three exception classes, and `as e` — preceded by two sentences using undefined jargon ("handle errors gracefully").
+
+**Why it's wrong.** A new *statement* is a bigger event than a new method. Five new things at once means the learner copies the block as an incantation and can't reassemble it.
+
+**Fix.** Build it stepwise across cells: (1) the crash without it — let the red traceback be the demo; (2) the minimal `try`/`except`; (3) refinements one at a time, with narration between. Define jargon in plain words at first use.
+
+### Invented or amplified course-level claims
+
+**Symptom.** The notebook promises something real — a certificate, a badge, a reward — that the course doesn't actually give out. Sometimes the seed was already in the repo ("unlock the final certificate" in an earlier notebook) and an edit elaborated it into a full ceremony.
+
+**Why it's wrong.** Storyline fiction is understood as a game; "you will receive X" is read as a fact about the training program. Someone will ask for their certificate.
+
+**Fix.** Never invent claims about what the learner receives or what the org provides. If an existing notebook/README already asserts one, verify with the user before building on it — flag it, don't decorate it.
+
 ### Demo printed output contradicts the lesson
 
 **Symptom.** The markdown says "don't do X — it's error-prone." The code cell shows X and Y side by side. Both print successful results. The "good" approach often produces *uglier-looking* output (e.g., URL-encoded characters that look like gibberish to a beginner).
@@ -172,12 +204,13 @@ Two markers, both for the same exercise.
 Given an existing notebook, walk this list in order:
 
 1. **Run it from a fresh kernel.** Either `Kernel → Restart & Run All` in Jupyter, or `jupyter nbconvert --to notebook --execute solutions/foo.ipynb`. Note any cell that fails.
-2. **Read the markdown cells in order.** For each section: theory → demo → exercise present? In order? Demo runnable, demo demonstrates its claim? Is any new syntax explained on first use? Is each demo one idea per cell, not three?
-3. **Trace the pacing.** Where does the learner first touch the keyboard — is the first exercise in the first section or two? Does any section lack an exercise? Is there a synthesis exercise at the end? Does any later setup cell rebuild a prior exercise's answer?
-4. **Read the starter cells.** Could the learner solve them just from the comments? (If yes, soften the comments.) Does the exercise demand a step beyond replaying the demo?
-5. **Diff against the previous notebook in the series.** Tone consistent? Vocabulary consistent? New colloquialisms introduced?
-6. **Read the checkpoint.** Does every required variable have type AND content checks? Are assertions tight (`==`, not `>=`)? Do error messages tell the learner what went wrong?
-7. **Read the "What you'll learn" list.** Is every promise exercised by the checkpoint?
-8. **Diff learner ↔ solutions structurally.** Cell counts match? Markdown cells identical? Exercise variable names match?
+2. **Read the opening.** Is there a bridge/motivation paragraph between the time estimate and §N.1 (not just the "What you'll learn" bullets)? Does it connect to the previous notebook and to the learner's real work? Do any opening claims promise something real (certificate, reward) the course doesn't give?
+3. **Read the markdown cells in order.** For each section: theory → demo → exercise present? In order? Demo runnable, demo demonstrates its claim? If the section teaches a failure mode — is the failure actually triggered (or honestly disclaimed), not just its remedy demoed? Is any new syntax explained on first use, with new *statements* built up stepwise rather than in one dense cell? Is each demo one idea per cell, not three?
+4. **Trace the pacing.** Where does the learner first touch the keyboard — is the first exercise in the first section or two? Does any section lack an exercise? Is there a synthesis exercise at the end? Does any later setup cell rebuild a prior exercise's answer?
+5. **Read the starter cells.** Could the learner solve them just from the comments? (If yes, soften the comments.) Does the exercise demand a step beyond replaying the demo?
+6. **Diff against the previous notebook in the series.** Tone consistent? Vocabulary consistent? New colloquialisms introduced?
+7. **Read the checkpoint.** Does every required variable have type AND content checks? Are assertions tight (`==`, not `>=`)? Do error messages tell the learner what went wrong?
+8. **Read the "What you'll learn" list.** Is every promise exercised by the checkpoint?
+9. **Diff learner ↔ solutions structurally.** Cell counts match? Markdown cells identical? Exercise variable names match?
 
 Take findings to the user before editing. Don't bundle a tone-polish pass with a structural fix — they may want different scope on each.

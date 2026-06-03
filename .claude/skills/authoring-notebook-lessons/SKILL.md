@@ -7,7 +7,9 @@ description: Use when creating, editing, or reviewing hands-on Jupyter teaching 
 
 For authoring Jupyter notebooks that teach Python + API fundamentals to absolute beginners — both creating new lessons and improving existing ones. Encodes the patterns from `docs/NOTEBOOK_AUTHORING_RULES.md` plus lessons learned from review sessions on this repo.
 
-## Six high-leverage principles
+**Know the audience.** This course is internal company training — learners will apply these skills at work, on company APIs, with colleagues to ask for help. Anchor motivation paragraphs, escalation advice ("who to contact"), and "what's next" pointers in that real work context (internal APIs, the team that owns an API, IT support) — not only in public practice APIs. If you're using this skill on a different course and don't know the audience, ask the user before writing motivational or what's-next content.
+
+## Seven high-leverage principles
 
 These are the rules that, when broken, produce the most learner confusion. Check every section against them.
 
@@ -34,6 +36,8 @@ If the lesson is "don't do X because Y", the demo must visibly show Y happening.
 
 **Why this matters.** Sanity-check every demo by asking: "Does the printed output prove the lesson, or contradict it?" Example from this repo's §4.2: a demo claimed hand-gluing URLs is error-prone, but the side-by-side output showed both forms working identically. Lesson didn't land. See `references/examples/weak-section-fixed.md`.
 
+This applies doubly to **failure modes**. When the lesson is an error (401, 404, timeout), trigger it live — and mine earlier notebooks for setups that make that possible: an auth-protected API introduced in a previous notebook, called *without* its key, produces a genuine 401. When a failure genuinely can't be reproduced (429 rate limits, 500s), teach it as description and *say so in the notebook text* ("we can't safely trigger this one here"). Never demo only the remedy: a `time.sleep()` added to a loop against an API that never rate-limits at that volume is cargo-cult code — it implies a failure nobody saw and teaches superstition, not engineering.
+
 ### 4. Don't leak the answer
 
 Starter cells must not contain the solution in comments. Exercise prompts must not spoon-feed the endpoint URL when the lesson above just taught docs-reading. State the required variable *names*; do not state the *path to producing them*. This also applies *downstream*: a later section's setup or demo cell must not silently rebuild the exact artifact a previous exercise asked the learner to produce. If you need that data again, reuse the learner's variable or rebuild it in a visibly different, condensed form — never paste the solution into a cell the learner will scroll past.
@@ -52,9 +56,33 @@ Assertions match the exact expected result. `len(x) == 4` for a four-item input,
 
 - **Motivation and new-tool intros get room.** The opening "why this notebook" framing and the first encounter with a major new library deserve a few warm sentences — what it is, why it's the standard tool for this job, when you'd reach for it. `pandas` is "Python's go-to way to work with tabular data," not just "a library that makes tables." Per-concept micro-theory still stays tight (2–3 sentences).
 - **Explain new syntax the first time it appears.** Any function, method, or idiom the learner hasn't met in an earlier notebook gets a one-line "what it does, and why here" — e.g. `dict.get(key, default)` returns a fallback instead of crashing when the key is missing, which is why it's safer than `dict[key]`. Before assuming something is known, check the earlier notebooks for where it was introduced.
+- **A new language construct is a section-level event, not a footnote.** The first `try`/`except` — or any new *statement* the learner hasn't met — is in a different category from a new method. It gets the full ladder, built up stepwise: first show the crash it prevents (the red traceback, the results that never got computed), then the minimal form (one `try`, one `except`), then refinements (`raise_for_status()`, multiple `except` clauses, `as e`) one cell at a time with narration between. Five new things in one cell is how a construct becomes magic. And define jargon in plain words at first use — "handle errors gracefully" means *the program notices the problem, reports it, and keeps going instead of crashing*.
 - **One idea per cell.** Don't stack two new patterns into one dense cell. Split a multi-step demo into stepwise cells with a sentence of narration between them, so the learner reads → runs → understands before the next step.
 
 **Why this matters.** Absolute beginners can't fill gaps you skip — an unexplained `.get()` or a cell doing three new things at once reads as magic, and magic doesn't transfer. Brevity is a tool for clarity, not a licence to omit the explanation that makes code legible.
+
+### 7. Storyline is fiction; course claims are real
+
+The narrative layer (detective story, clues, a playful finale) may be elaborated freely. Claims about the real world may not: what the learner *receives* (certificates, badges, rewards), what the org provides or promises, who supports what. Never invent these. And don't amplify them either — if an existing notebook or README already asserts one ("unlock the final certificate"), that's not licence to build a certificate ceremony on top of it. Verify the claim with the user first; flag it, don't decorate it.
+
+**Why this matters.** Learners take course promises literally — someone will ask where their certificate is. Fictional clues are understood as a game; "you will receive X" is read as a fact about the training program, and a made-up fact there damages trust in everything else the course says.
+
+## Notebook opening pattern
+
+Before §N.1, every notebook opens with this shape — going from the title bullets straight into the first section reads as a lecture syllabus:
+
+```
+# Notebook N: Title
+**Time: X-Y minutes**
+
+[Bridge + motivation: 2-4 sentences. What can the learner already do
+after notebook N-1, what does this one add, and why does that matter
+in their real work? Notebooks 4 and 5 are the approved register —
+NB4 opens with a bridge paragraph, NB5 with a "Why transform?" section.]
+
+### What you'll learn
+- [Only promises the checkpoint actually checks]
+```
 
 ## Section pattern
 
@@ -86,7 +114,7 @@ Required variables:
 
 1. Read the learner notebook AND its solutions counterpart side by side. They must mirror each other.
 2. Read `docs/NOTEBOOK_AUTHORING_RULES.md` if it exists in the project.
-3. Audit every section against the six principles + the pattern. `references/common-pitfalls.md` is the full symptom → why → fix catalogue and ends with a step-by-step audit pass to walk in order.
+3. Audit every section against the seven principles + the patterns (notebook opening included). `references/common-pitfalls.md` is the full symptom → why → fix catalogue and ends with a step-by-step audit pass to walk in order.
 4. Present findings to the user before editing — let them prioritize. Don't bundle "polish" with structural fixes; the user may want different scope for each.
 5. Apply each agreed edit to **both** notebook and solutions in the same pass. See `references/safe-notebook-edits.md` for the script pattern.
 6. Validate by executing the solutions notebook end-to-end and confirming every checkpoint + clue passes.
@@ -95,7 +123,7 @@ Required variables:
 
 1. Clarify with the user: topic + ONE primary learning goal. A whole notebook usually carries 4-7 small sections building one bigger skill.
 2. Pick a real-world example. Browse `references/real-world-apis.md` for stable teaching APIs, or pick another genuinely public, no-auth endpoint.
-3. Draft each section using the pattern (theory → demo → exercise).
+3. Draft the notebook opening (bridge + motivation + "What you'll learn"), then each section using the pattern (theory → demo → exercise).
 4. Add a final checkpoint cell that asserts on every required variable from the exercises. Each variable gets type + content checks.
 5. (Optional) Add a capstone/"clue" cell gated behind a `notebookN_ready_for_clue` flag set by the checkpoint — useful for storyline-driven courses.
 6. Mirror to the solutions notebook with working solutions for every exercise. Solutions cells should be terser than learner starters but otherwise structurally identical.

@@ -2,6 +2,10 @@
 
 The shape every learner section should follow. The order is load-bearing — skipping the demo beat or putting the exercise before the demo measurably increases learner friction.
 
+## Before §N.1: the notebook opening
+
+Sections live inside a notebook that must first earn the learner's attention. The opening is: title → time estimate → **bridge/motivation paragraph (2–4 sentences: what they can already do, what this notebook adds, why it matters in their real work)** → "What you'll learn" bullets. The bullets alone are a syllabus, not motivation — see NB4's bridge paragraph and NB5's "Why transform?" for the approved register. Full template in SKILL.md.
+
 ## The shape
 
 ```

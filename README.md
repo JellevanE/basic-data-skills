@@ -20,7 +20,11 @@ Start with notebook 0, then continue in order:
 4. `3_your_first_api_calls.ipynb` — first `requests.get()`, status codes
 5. `4_working_with_api_data.ipynb` — query params, Open-Meteo, auth concepts, pagination
 6. `5_transforming_and_saving_data.ipynb` — loops → pandas DataFrames, select/filter/sort, derived columns, CSV/Excel/JSON export
-7. `6_errors_troubleshooting_and_finale.ipynb` — error handling, debugging, finale certificate
+7. `6_errors_troubleshooting_and_finale.ipynb` — error handling, debugging, case-closing finale
+
+Optional extra, outside the storyline:
+
+- `A_reading_swagger_api_docs.ipynb` — appendix: reading a Swagger/OpenAPI documentation page
 
 ---
 

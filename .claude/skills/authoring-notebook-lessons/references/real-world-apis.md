@@ -117,6 +117,29 @@ requests.get("https://api.nasa.gov/planetary/apod", params={"api_key": "DEMO_KEY
 
 ---
 
+## Swagger Petstore — `https://petstore.swagger.io/v2/`
+
+The canonical Swagger UI demo API. The *data* is fake (community-posted sandbox pets), but that's not what it teaches: the artifact here is the **documentation page itself** — the one teaching example of Swagger UI that is guaranteed to stay up and look exactly like the Swagger pages learners will meet on company APIs.
+
+**Good for teaching:**
+- Reading a Swagger/OpenAPI page: tag groups, color-coded verbs, parameters table, Models section, Authorize button, "Try it out"
+- Fetching the machine-readable spec (`/v2/swagger.json`) and navigating it as a dict
+- Query vs path parameters from documented entries (`/pet/findByStatus` vs `/pet/{petId}`)
+
+**Known-good calls:**
+```python
+requests.get("https://petstore.swagger.io/v2/swagger.json")           # the spec; info/title == "Swagger Petstore", 14 paths
+requests.get("https://petstore.swagger.io/v2/pet/findByStatus",
+             params={"status": "available"})                           # list of pet dicts, no auth
+```
+
+**Quirks:**
+- Shared writable sandbox: pets appear and vanish constantly. A chained lookup (`findByStatus` → `GET /pet/{id}`) can legitimately 404 between two calls — checkpoints must accept 200 *or* 404 on the live lookup, and the notebook text should say why. Assert exactly only on race-free facts (spec title, path count, model fields).
+- Spec is OpenAPI v2 ("Swagger 2.0"): models under `definitions`, not `components/schemas`. Frozen for years (version 1.0.7) — exact asserts on it are safe.
+- Don't anchor lessons on the pet *data* (names like `doggie-14-827` are junk) — only on the docs and the call mechanics.
+
+---
+
 ## Things to NOT use
 
 - `httpbin.org` — useful for testing requests/responses but the data is fake and learners can't anchor on what it "means".
